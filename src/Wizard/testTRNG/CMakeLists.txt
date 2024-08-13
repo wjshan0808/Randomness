@@ -1,0 +1,73 @@
+cmake_minimum_required(VERSION 3.16)
+
+#
+project(testTRNG
+    LANGUAGES CXX
+    VERSION 1.0.1
+)
+
+
+#
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
+# EXECUTABLE_OUTPUT_PATH
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../../bin)
+
+#message("CMAKE_PREFIX_PATH = " ${CMAKE_PREFIX_PATH})
+##set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+#set(CMAKE_SKIP_BUILD_RPATH false)
+#set(CMAKE_BUILD_WITH_INSTALL_RPATH true)
+#set(CMAKE_INSTALL_RPATH "\${ORIGIN}")
+
+
+#
+message("OPENSSL_HOME_PATH = " ${OPENSSL_HOME_PATH})
+include_directories(BEFORE
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../include
+    ${OPENSSL_HOME_PATH}/include
+)
+
+# header files GLOB CONFIGURE_DEPENDS
+file(GLOB_RECURSE inc${PROJECT_NAME} LIST_DIRECTORIES false ${CMAKE_CURRENT_SOURCE_DIR} "*.h*")
+# TREE
+#source_group(TREE "Header Files" FILES ${CMAKE_CURRENT_SOURCE_DIR})
+
+# source files
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} src${PROJECT_NAME})
+
+
+#
+add_executable(${PROJECT_NAME}
+    ${inc${PROJECT_NAME}}
+    ${src${PROJECT_NAME}}
+)
+#
+set_target_properties(${PROJECT_NAME} PROPERTIES
+#    LINK_FLAGS "-Wl,-rpath,'$ORIGIN'" # ,-rpath='$ORIGIN'
+#    INSTALL_RPATH_USE_LINK_PATH TRUE
+    SKIP_BUILD_RPATH FALSE
+    BUILD_WITH_INSTALL_RPATH TRUE
+    INSTALL_RPATH "$ORIGIN"
+)
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE RANDOMNESS_LIBRARY
+)
+target_link_directories(${PROJECT_NAME}
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../lib
+    ${OPENSSL_HOME_PATH}/lib
+)
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE Randomness
+    m
+    crypto
+)
+
+
+#include(GNUInstallDirs)
+#install(TARGETS testTRNG
+#    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+#)
+
