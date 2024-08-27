@@ -42,6 +42,8 @@ aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} src${PROJECT_NAME})
 add_executable(${PROJECT_NAME}
     ${inc${PROJECT_NAME}}
     ${src${PROJECT_NAME}}
+# old way
+    ${subTargetObjects}
 )
 #
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -59,6 +61,9 @@ target_link_directories(${PROJECT_NAME}
     ${OPENSSL_HOME_PATH}/lib
 )
 target_link_libraries(${PROJECT_NAME}
+# new way
+#    PRIVATE ${subTargetObjects}
+#    $<TARGET_OBJECTS:subXXX>
     PRIVATE Randomness
     m
     crypto
@@ -66,7 +71,7 @@ target_link_libraries(${PROJECT_NAME}
 
 
 #include(GNUInstallDirs)
-#install(TARGETS testTRNG
+#install(TARGETS ${PROJECT_NAME}
 #    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 #    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 #)

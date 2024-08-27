@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
+# ls -l `which sh` --> dash 不支持 if [[ 语法
 
 # 检查参数个数
 if [ $# -ne 2 ]; then
@@ -12,7 +14,8 @@ fi
 # find $1 -name '*.h' | cpio -pvudm $2
 # find $1 -name '*.h' -exec cp -r {} $2 \;
 # 安装头文件
-function installHeaderFiles() {
+#function 
+installHeaderFiles() {
 
     # 参数变量
     local srcPath=$1
@@ -51,7 +54,9 @@ function installHeaderFiles() {
                     echo "  cp -f $itemSrcPath $mkdirPath "
                     cp -f $itemSrcPath $mkdirPath
                 fi
+                
             fi
+
         fi
 
     done

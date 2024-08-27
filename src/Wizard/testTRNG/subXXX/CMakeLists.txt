@@ -1,7 +1,7 @@
 
 #
-project(subA2xTest
-#    LANGUAGES CXX
+project(subXXX
+#    LANGUAGES C CXX
 #    VERSION 1.0.1
 )
 
@@ -28,23 +28,22 @@ add_library(${PROJECT_NAME} OBJECT
     ${inc${PROJECT_NAME}}
     ${src${PROJECT_NAME}}
 # old way
-#   ${subTargetObjects}
-#    $<TARGET_OBJECTS:subXXX>
-#    $<TARGET_OBJECTS:subA2xKits>
+#    ${subTargetObjects}
+#    $<TARGET_OBJECTS:subX>
 )
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    POSITION_INDEPENDENT_CODE ON
-)
+#set_target_properties(${PROJECT_NAME} PROPERTIES
+#    POSITION_INDEPENDENT_CODE ON
+#)
 target_link_libraries(${PROJECT_NAME}
 # new way
 #    PRIVATE ${subTargetObjects}
-#   PUBLIC subA2xTest
 #    $<TARGET_OBJECTS:subXXX>
-#    subA2xKits
-    m
+#    subX
+    XXXInterface
+#    m
 )
 
-#
+# parent scope
 list(APPEND subTargetObjects $<TARGET_OBJECTS:${PROJECT_NAME}>)
 set(subTargetObjects ${subTargetObjects} PARENT_SCOPE)
 message("${PROJECT_NAME} subTargetObjects = " ${subTargetObjects})

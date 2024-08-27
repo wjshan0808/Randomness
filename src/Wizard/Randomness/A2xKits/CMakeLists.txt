@@ -27,11 +27,20 @@ aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} src${PROJECT_NAME})
 add_library(${PROJECT_NAME} OBJECT
     ${inc${PROJECT_NAME}}
     ${src${PROJECT_NAME}}
+# old way
+#   ${subTargetObjects}
+#    $<TARGET_OBJECTS:subXXX>
+#    $<TARGET_OBJECTS:subA2xKits>
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES
     POSITION_INDEPENDENT_CODE ON
 )
 target_link_libraries(${PROJECT_NAME}
+# new way
+#    PRIVATE ${subTargetObjects}
+#   PUBLIC subA2xTest
+#    $<TARGET_OBJECTS:subXXX>
+#    subA2xKits
     m
 )
 

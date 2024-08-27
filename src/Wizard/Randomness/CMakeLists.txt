@@ -43,8 +43,9 @@ message("${PROJECT_NAME} subTargetObjects = " ${subTargetObjects})
 add_library(${PROJECT_NAME} SHARED
     ${inc${PROJECT_NAME}}
     ${src${PROJECT_NAME}}
-#    $<TARGET_OBJECTS:subA2xKits>
-#    $<TARGET_OBJECTS:subA2xTest>
+# old way
+#   ${subTargetObjects}
+#    $<TARGET_OBJECTS:subXXX>
 )
 # target properties
 target_compile_definitions(${PROJECT_NAME}
@@ -54,8 +55,10 @@ target_link_directories(${PROJECT_NAME} BEFORE
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../lib
 )
 target_link_libraries(${PROJECT_NAME}
+# new way
     PRIVATE ${subTargetObjects}
 #   PUBLIC subA2xTest
+#    $<TARGET_OBJECTS:subXXX>
     m
 )
 
