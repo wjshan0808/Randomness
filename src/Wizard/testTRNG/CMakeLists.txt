@@ -11,6 +11,13 @@ project(testTRNG
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+find_package(Qt6 REQUIRED
+    COMPONENTS Core Sql Network
+)
+
 
 # EXECUTABLE_OUTPUT_PATH
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../../bin)
@@ -64,7 +71,8 @@ target_link_libraries(${PROJECT_NAME}
 # new way
 #    PRIVATE ${subTargetObjects}
 #    $<TARGET_OBJECTS:subXXX>
-    PRIVATE Randomness
+    PRIVATE Qt6::Core Qt6::Network Qt6::Sql
+    Randomness
     m
     crypto
 )

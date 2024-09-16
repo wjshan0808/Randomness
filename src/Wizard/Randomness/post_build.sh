@@ -50,7 +50,7 @@ installHeaderFiles() {
             else
 
                 # 复制头文件 ~正则匹配
-                if [[ "${itemFile##*.}" =~ ^h*$ ]]; then
+                if [[ "${itemFile##*.}" =~ ^h.*$ ]]; then
                     echo "  cp -f $itemSrcPath $mkdirPath "
                     cp -f $itemSrcPath $mkdirPath
                 fi
